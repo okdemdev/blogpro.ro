@@ -23,7 +23,7 @@ export async function CreateSiteAction(prevSate: any, formData: FormData) {
 
   const response = await prisma.site.create({
     data: {
-      descripiton: submission.value.descripiton,
+      description: submission.value.description,
       name: submission.value.name,
       subdirectory: submission.value.subdirectory,
       userId: user.id,

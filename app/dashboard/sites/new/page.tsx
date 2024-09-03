@@ -65,12 +65,12 @@ export default function NewSiteRoute() {
               <div className="grid gap-2">
                 <Label>Description</Label>
                 <Textarea
-                  name={fields.descripiton.name}
-                  key={fields.descripiton.key}
-                  defaultValue={fields.descripiton.initialValue}
+                  name={fields.description.name}
+                  key={fields.description.key}
+                  defaultValue={fields.description.initialValue}
                   placeholder="Small Descripiton for your Site"
                 ></Textarea>
-                <p className="text-red-500 text-sm">{fields.descripiton.errors}</p>
+                <p className="text-red-500 text-sm">{fields.description.errors}</p>
               </div>
             </div>
           </CardContent>
