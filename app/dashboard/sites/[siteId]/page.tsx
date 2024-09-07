@@ -1,3 +1,4 @@
+import { EmptyState } from '@/app/components/dashboard/EmptyState';
 import prisma from '@/app/utils/db';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -63,7 +64,7 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
           </Link>
         </Button>
         <Button asChild variant={'secondary'}>
-          <Link href="#">
+          <Link href={`/dashboard/sites/${params.siteId}/settings`}>
             <Settings className="size-4 mr-2" />
             Settings
           </Link>
@@ -76,21 +77,12 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
         </Button>
       </div>
       {data === undefined || data.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-md border border-dashed p-8 text-center animate-in fade-in-50">
-          <div className="flex size-20 items-center justify-center rounded-full bg-primary/10">
-            <FileIcon className="size-10 text-primary" />
-          </div>
-          <h2 className="mt-6 text-xl font-semibold">You don't have any Articles created</h2>
-          <p className="mb-8 mt-2 text-center text-sm leading-tight text-muted-foreground max-w-sm mx-auto">
-            You currently dont have any Articles created on this site. Please create some so that
-            you can see them right here!
-          </p>
-          <Button asChild>
-            <Link href={`/dashboard/sites/${params.siteId}/create`}>
-              <PlusCircle className="mr-2 size-4" /> Create Article
-            </Link>
-          </Button>
-        </div>
+        <EmptyState
+          title="You dont have any Articles created"
+          descripiton="You currently dont have any Articles for this Site. Please create some so that you can see them right here!"
+          buttonText="Create Article"
+          href={`/dashboard/sites/${params.siteId}/create`}
+        />
       ) : (
         <div>
           <Card>
@@ -148,7 +140,11 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
                                   Edit
                                 </Link>
                               </DropdownMenuItem>
-                              <DropdownMenuItem>Delete</DropdownMenuItem>
+                              <DropdownMenuItem asChild>
+                                <Link href={`/dashboard/sites/${params.siteId}/${item.id}/delete`}>
+                                  Delete
+                                </Link>
+                              </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
                         </TableCell>
