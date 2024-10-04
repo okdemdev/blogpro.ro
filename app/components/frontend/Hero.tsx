@@ -15,7 +15,7 @@ export function Hero() {
             <Image src={Logo} className="size-10" alt="Logo" />
 
             <h4 className="text-3xl font-semibold">
-              Blog<span className="text-primary">Marshal</span>
+              Blog<span className="text-primary">Pro</span>
             </h4>
           </Link>
           <div className="md:hidden">
@@ -47,7 +47,7 @@ export function Hero() {
 
             <p className="max-w-xl mx-auto mt-4 text-base font-light lg:text-lg text-muted-foreground tracking-tighter">
               Setting up your blog is hard and time consuming. We make it easy for you to create a
-              blog in minutes
+              blog in minutes with our intuitive platform.
             </p>
             <div className="flex items-center gap-x-5 w-full justify-center mt-5 ">
               <LoginLink>

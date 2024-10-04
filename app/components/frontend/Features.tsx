@@ -4,25 +4,25 @@ const features = [
   {
     name: 'Sign up for free',
     description:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.',
+      'Get started with our platform at no cost. Experience the power of effortless blogging without any financial commitment.',
     icon: CloudRain,
   },
   {
     name: 'Balzing fast',
     description:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.',
+      'Enjoy lightning-quick performance. Our optimized platform ensures your blog loads in the blink of an eye, keeping your readers engaged.',
     icon: CloudRain,
   },
   {
     name: 'Super secure with Kinde',
     description:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.',
+      'Rest easy knowing your data is protected. We leverage Kinde s robust security measures to keep your information safe and sound.',
     icon: CloudRain,
   },
   {
     name: 'Easy to use',
     description:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.',
+      'Intuitive interface designed for bloggers of all levels. Create, manage, and publish your content with ease and confidence.',
     icon: CloudRain,
   },
 ];
@@ -36,8 +36,8 @@ export function Features() {
           Get your blog up and running in minutes
         </h1>
         <p className="mt-6 text-base leading-snug text-muted-foreground">
-          Right here you can create a blog in minutes. We make it easy for you to create a blog in
-          minutes. The blog is very fast and easy to create.
+          Create your dream blog effortlessly. Our platform streamlines the process, allowing you to
+          focus on what matters most – your content. Start sharing your ideas with the world today.
         </p>
       </div>
 

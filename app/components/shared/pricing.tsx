@@ -24,14 +24,14 @@ export const PricingPlans: iAppProps[] = [
   {
     id: 0,
     cardTitle: 'Freelancer',
-    cardDescription: 'The best pricing plan for people starting out.',
+    cardDescription: 'Perfect for those just starting their blogging journey.',
     benefits: ['1 Site', 'Up to 1000 Visitors', 'Up to 10 Posts'],
     priceTitle: 'Free',
   },
   {
     id: 1,
     cardTitle: 'Startup',
-    cardDescription: 'The best pricing plan for professionals.',
+    cardDescription: 'Ideal for growing blogs and businesses.',
     benefits: ['Unlimited Sites', 'Unlimited Visitors', 'Unlimited Posts'],
     priceTitle: '$2.99',
   },
@@ -47,8 +47,8 @@ export function PricingTable() {
         </h1>
       </div>
       <p className="mx-auto mt-6 max-w-2xl text-center leading-tight text-muted-foreground">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus distinctio dolores hic,
-        sed ipsum exercitationem illo doloribus commodi quaerat ad.
+        Choose a plan that fits your needs. Whether you're just starting out or scaling up, we've
+        got you covered with flexible options to support your blogging journey.
       </p>
       <div className="grid grid-cols-1 gap-8 mt-16 lg:grid-cols-2">
         {PricingPlans.map((item) => (

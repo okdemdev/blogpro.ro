@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <Link href="/" className="flex items-center gap-2 font-semibold">
               <Image src={Logo} alt="Logo" className="size-8" />
               <h3 className="text-2xl">
-                Blog<span className="text-primary">Damian</span>
+                Blog<span className="text-primary">Pro</span>
               </h3>
             </Link>
           </div>
