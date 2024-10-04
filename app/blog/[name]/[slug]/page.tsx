@@ -1,9 +1,11 @@
+import { RenderArticle } from '@/app/components/dashboard/RenderArticle';
 import prisma from '@/app/utils/db';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { JSONContent } from 'novel';
 
 async function getData(slug: string) {
   const data = await prisma.post.findUnique({
@@ -15,6 +17,7 @@ async function getData(slug: string) {
       title: true,
       smallDescription: true,
       image: true,
+      createdAt: true,
     },
   });
 
@@ -40,7 +43,9 @@ export default async function SlugRoute({ params }: { params: { slug: string; na
       <div className="flex flex-col items-center justify-center mb-10">
         <div className="m-auto w-full text-center md:w-7/12">
           <p className="m-auto my-5 w-10/12 text-sm font-light text-muted-foreground md:text-base">
-            16 aprl 2024
+            {new Intl.DateTimeFormat('en-US', {
+              dateStyle: 'medium',
+            }).format(data.createdAt)}
           </p>
           <h1 className="mb-5 text-3xl font-bold md:text-6xl tracking-tight">{data.title}</h1>
           <p className="m-auto w-10/12 text-muted-foreground line-clamp-3">
@@ -59,6 +64,7 @@ export default async function SlugRoute({ params }: { params: { slug: string; na
           priority
         />
       </div>
+      <RenderArticle json={data.articleContent as JSONContent} />
     </>
   );
 }
