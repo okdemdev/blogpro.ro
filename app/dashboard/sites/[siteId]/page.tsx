@@ -26,24 +26,45 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 async function getData(userId: string, siteId: string) {
-  const data = await prisma.post.findMany({
+  // const data = await prisma.post.findMany({
+  //   where: {
+  //     userId: userId,
+  //     siteId: siteId,
+  //   },
+  //   select: {
+  //     image: true,
+  //     title: true,
+  //     createdAt: true,
+  //     id: true,
+  //     Site: {
+  //       select: {
+  //         subdirectory: true,
+  //       },
+  //     },
+  //   },
+  //   orderBy: {
+  //     createdAt: 'desc',
+  //   },
+  // });
+
+  const data = await prisma.site.findUnique({
     where: {
+      id: siteId,
       userId: userId,
-      siteId: siteId,
     },
     select: {
-      image: true,
-      title: true,
-      createdAt: true,
-      id: true,
-      Site: {
+      subdirectory: true,
+      posts: {
         select: {
-          subdirectory: true,
+          image: true,
+          title: true,
+          createdAt: true,
+          id: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
         },
       },
-    },
-    orderBy: {
-      createdAt: 'desc',
     },
   });
   return data;
@@ -63,7 +84,7 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
     <>
       <div className="flex w-full justify-end gap-x-4">
         <Button asChild variant="secondary">
-          <Link href={`/blog/${data[0].Site.subdirectory}`}>
+          <Link href={`/blog/${data?.subdirectory}`}>
             <Book className="size-4 mr-2" />
             View Blog
           </Link>
@@ -81,7 +102,7 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
           </Link>
         </Button>
       </div>
-      {data === undefined || data.length === 0 ? (
+      {data?.posts === undefined || data.posts.length === 0 ? (
         <EmptyState
           title="You dont have any Articles created"
           descripiton="You currently dont have any Articles for this Site. Please create some so that you can see them right here!"
@@ -108,7 +129,7 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {data.map((item) => (
+                    {data.posts.map((item) => (
                       <TableRow key={item.id}>
                         <TableCell>
                           <Image
