@@ -47,7 +47,7 @@ export function PricingTable() {
         </h1>
       </div>
       <p className="mx-auto mt-6 max-w-2xl text-center leading-tight text-muted-foreground">
-        Choose a plan that fits your needs. Whether you're just starting out or scaling up, we've
+        Choose a plan that fits your needs. Whether you re just starting out or scaling up, we ve
         got you covered with flexible options to support your blogging journey.
       </p>
       <div className="grid grid-cols-1 gap-8 mt-16 lg:grid-cols-2">
