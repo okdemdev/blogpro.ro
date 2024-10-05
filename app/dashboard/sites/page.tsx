@@ -63,9 +63,14 @@ export default async function SitesRoute() {
                 <CardDescription className="line-clamp-2">{item.description}</CardDescription>
               </CardHeader>
               <CardFooter>
-                <Button asChild className="w-full">
-                  <Link href={`/dashboard/sites/${item.id}`}>View Articles</Link>
-                </Button>
+                <div className="flex items-center gap-4 w-full">
+                  <Button asChild className="w-full" variant={'outline'}>
+                    <Link href={`/dashboard/sites/${item.id}/settings`}>Edit</Link>
+                  </Button>
+                  <Button asChild className="w-full">
+                    <Link href={`/dashboard/sites/${item.id}`}>View Articles</Link>
+                  </Button>
+                </div>
               </CardFooter>
             </Card>
           ))}
