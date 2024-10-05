@@ -199,8 +199,8 @@ export async function CreateSubscripiton() {
       address: 'auto',
       name: 'auto',
     },
-    success_url: 'http://localhost:3000/dashboard/payment/success',
-    cancel_url: 'http://localhost:3000/dashboard/payment/cancelled',
+    success_url: 'https://blog-pro-blush.vercel.app/dashboard/payment/success',
+    cancel_url: 'https://blog-pro-blush.vercel.app/dashboard/payment/cancelled',
     line_items: [{ price: process.env.STRIPE_PRICE_ID, quantity: 1 }],
   });
 
