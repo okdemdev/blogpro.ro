@@ -15,6 +15,13 @@ import TextStyle from '@tiptap/extension-text-style';
 import CodeBlock from '@tiptap/extension-code-block';
 import OrderedList from '@tiptap/extension-ordered-list';
 import Bold from '@tiptap/extension-bold';
+import HardBreak from '@tiptap/extension-hard-break';
+import Image from '@tiptap/extension-image';
+import HorizontalRule from '@tiptap/extension-horizontal-rule';
+import TaskItem from '@tiptap/extension-task-item';
+import TaskList from '@tiptap/extension-task-list';
+import Highlight from '@tiptap/extension-highlight';
+import Strike from '@tiptap/extension-strike';
 
 export function RenderArticle({ json }: { json: JSONContent }) {
   const outPut = useMemo(() => {
@@ -33,6 +40,13 @@ export function RenderArticle({ json }: { json: JSONContent }) {
       CodeBlock,
       OrderedList,
       Bold,
+      HardBreak,
+      Image,
+      HorizontalRule,
+      TaskItem,
+      TaskList,
+      Highlight,
+      Strike,
     ]);
   }, [json]);
   return (
