@@ -33,7 +33,10 @@ export default async function PricingPage() {
 
     const session = await stripe.billingPortal.sessions.create({
       customer: data?.User?.customerId as string,
-      return_url: 'http://localhost:3000/dashboard',
+      return_url:
+        process.env.NODE_ENV === 'production'
+          ? 'https://blog-pro-blush.vercel.app/dashboard'
+          : 'http://localhost:3000/dashboard',
     });
 
     return redirect(session.url);
@@ -41,17 +44,17 @@ export default async function PricingPage() {
 
   if (data?.status === 'active') {
     return (
-      <Card className="w-full">
+      <Card className="w-full ">
         <CardHeader>
           <CardTitle>Edit Subscription</CardTitle>
           <CardDescription>
             Click on the button below, this will give you the opportunity to change your payment
-            details and view your invoices at the same time
+            details and view your statement at the same time.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form action={createCustomerPortal}>
-            <SubmitButton text="View Subscripiton Details" />
+            <SubmitButton text="View Subscription Details" />
           </form>
         </CardContent>
       </Card>
