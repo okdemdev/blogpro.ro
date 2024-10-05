@@ -17,10 +17,10 @@ interface EarningData {
 }
 
 const earningsData: EarningData[] = [
-  { period: 'Today', amount: 1234.56, change: 12.5 },
-  { period: 'Yesterday', amount: 987.65, change: -5.2 },
-  { period: 'Last Week', amount: 7654.32, change: 8.7 },
-  { period: 'Last Month', amount: 32109.87, change: 15.3 },
+  { period: 'Today', amount: 11.4, change: 0 },
+  { period: 'Yesterday', amount: 0.0, change: 0 },
+  { period: 'Last Week', amount: 0.0, change: 0 },
+  { period: 'Last Month', amount: 0.0, change: 0 },
 ];
 
 export function EarningsSection() {
@@ -67,17 +67,21 @@ export function EarningsSection() {
               <div>
                 <div className="flex justify-between mb-1 text-sm">
                   <span>Ad Revenue</span>
-                  <span>60%</span>
+                  <span>100%</span>
                 </div>
-                <Progress value={60} className="h-2 bg-blue-100" indicatorClassName="bg-blue-500" />
+                <Progress
+                  value={100}
+                  className="h-2 bg-blue-100"
+                  indicatorClassName="bg-blue-500"
+                />
               </div>
               <div>
                 <div className="flex justify-between mb-1 text-sm">
                   <span>Subscriptions</span>
-                  <span>30%</span>
+                  <span>0%</span>
                 </div>
                 <Progress
-                  value={30}
+                  value={0}
                   className="h-2 bg-green-100"
                   indicatorClassName="bg-green-500"
                 />
@@ -85,10 +89,10 @@ export function EarningsSection() {
               <div>
                 <div className="flex justify-between mb-1 text-sm">
                   <span>Affiliate</span>
-                  <span>10%</span>
+                  <span>0%</span>
                 </div>
                 <Progress
-                  value={10}
+                  value={0}
                   className="h-2 bg-yellow-100"
                   indicatorClassName="bg-yellow-500"
                 />
