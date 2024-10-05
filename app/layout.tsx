@@ -16,15 +16,13 @@ const geistMono = localFont({
 export const metadata = {
   title: 'Blog Pro',
   description: 'Set up your blog in minutes',
-  icons: {
-    icon: '/logo.svg', // Add your favicon here
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/logo.svg" type="image/svg+xml" /> {/* Add favicon directly */}
         <AdSense pId="2141920018752286" />
       </head>
       <body className={`${geistSans.className} ${geistMono.className}`}>
