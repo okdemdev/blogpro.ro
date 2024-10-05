@@ -1,7 +1,8 @@
+import CopyUrlButton from '@/app/components/dashboard/CopyButton';
 import { RenderArticle } from '@/app/components/dashboard/RenderArticle';
 import prisma from '@/app/utils/db';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Share } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -32,14 +33,18 @@ export default async function SlugRoute({ params }: { params: { slug: string; na
   const data = await getData(params.slug);
   return (
     <>
-      <div className="flex items-center gap-x-3 pt-10 pb-5">
-        <Button size="icon" variant="outline" asChild>
-          <Link href={`/blog/${params.name}`}>
-            <ArrowLeft className="size-4" />
-          </Link>
-        </Button>
-        <h1 className="text-xl font-medium">Go Back</h1>
+      <div className="flex items-center gap-x-3 pt-10 pb-5 justify-between">
+        <div className="flex items-center gap-x-3">
+          <Button size="icon" variant="outline" asChild>
+            <Link href={`/blog/${params.name}`}>
+              <ArrowLeft className="size-4" />
+            </Link>
+          </Button>
+          <h1 className="text-xl font-medium">Go Back</h1>
+        </div>
+        <CopyUrlButton /> {/* Replaces the old share button */}
       </div>
+
       <div className="flex flex-col items-center justify-center mb-10">
         <div className="m-auto w-full text-center md:w-7/12">
           <p className="m-auto my-5 w-10/12 text-sm font-light text-muted-foreground md:text-base">
