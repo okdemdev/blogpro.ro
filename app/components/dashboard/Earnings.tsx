@@ -9,6 +9,7 @@ import {
   CreditCard,
 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import Link from 'next/link';
 
 interface EarningData {
   period: string;
@@ -17,7 +18,7 @@ interface EarningData {
 }
 
 const earningsData: EarningData[] = [
-  { period: 'Today', amount: 11.4, change: 0 },
+  { period: 'Today', amount: 0, change: 0 },
   { period: 'Yesterday', amount: 0.0, change: 0 },
   { period: 'Last Week', amount: 0.0, change: 0 },
   { period: 'Last Month', amount: 0.0, change: 0 },
@@ -25,14 +26,22 @@ const earningsData: EarningData[] = [
 
 export function EarningsSection() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">Your Earnings</h2>
         <Button className="bg-blue-600 hover:bg-blue-700 text-white">View Detailed Report</Button>
       </div>
+      <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+        <p className="text-yellow-700 font-semibold text-lg">
+          This feature is not available on the free tier. Upgrade to access your earnings.
+        </p>
+        <Link href="/dashboard/pricing">
+          <Button className="mt-2 bg-blue-600 hover:bg-blue-700 text-white">Upgrade Now</Button>
+        </Link>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {earningsData.map((data) => (
-          <Card key={data.period} className="bg-white dark:bg-gray-800">
+          <Card key={data.period} className="bg-gray-200 dark:bg-gray-700 opacity-50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{data.period}</CardTitle>
               <DollarSign className="h-4 w-4 text-blue-500" />
@@ -55,7 +64,7 @@ export function EarningsSection() {
         ))}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="bg-white dark:bg-gray-800">
+        <Card className="bg-gray-200 dark:bg-gray-700 opacity-50">
           <CardHeader>
             <CardTitle className="text-lg font-semibold flex items-center">
               <PieChart className="h-5 w-5 mr-2 text-blue-500" />
@@ -67,13 +76,9 @@ export function EarningsSection() {
               <div>
                 <div className="flex justify-between mb-1 text-sm">
                   <span>Ad Revenue</span>
-                  <span>100%</span>
+                  <span>0%</span>
                 </div>
-                <Progress
-                  value={100}
-                  className="h-2 bg-blue-100"
-                  indicatorClassName="bg-blue-500"
-                />
+                <Progress value={0} className="h-2 bg-blue-100" indicatorClassName="bg-blue-500" />
               </div>
               <div>
                 <div className="flex justify-between mb-1 text-sm">
@@ -100,7 +105,7 @@ export function EarningsSection() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white dark:bg-gray-800">
+        <Card className="bg-gray-200 dark:bg-gray-700 opacity-50">
           <CardHeader>
             <CardTitle className="text-lg font-semibold flex items-center">
               <TrendingUp className="h-5 w-5 mr-2 text-blue-500" />
@@ -109,13 +114,14 @@ export function EarningsSection() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+              <Button disabled className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                 Withdraw Earnings
               </Button>
-              <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
+
+              <Button disabled className="w-full bg-green-600 hover:bg-green-700 text-white">
                 Set Payout Method
               </Button>
-              <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white">
+              <Button disabled className="w-full bg-yellow-600 hover:bg-yellow-700 text-white">
                 View Tax Documents
               </Button>
             </div>
