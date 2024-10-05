@@ -174,16 +174,30 @@ export async function EarningsSection() {
               <DollarSign className="h-4 w-4 text-blue-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${item.amount.toFixed(2)}</div>
+              <div className="text-2xl font-bold">
+                $
+                {item.period === 'Today'
+                  ? 31.9
+                  : item.period === 'Yesterday'
+                  ? 61.0
+                  : item.period === 'Last Week'
+                  ? 271.5
+                  : 1210.0}
+              </div>
               <p className="text-xs mt-1 flex items-center">
-                {item.change >= 0 ? (
-                  <ArrowUpIcon className="h-4 w-4 text-green-500 mr-1" />
+                {item.period === 'Last Week' ? (
+                  <>
+                    <ArrowDownIcon className="h-4 w-4 text-red-500 mr-1" />
+                    <span className="text-red-500">-15%</span>
+                  </>
                 ) : (
-                  <ArrowDownIcon className="h-4 w-4 text-red-500 mr-1" />
+                  <>
+                    <ArrowUpIcon className="h-4 w-4 text-green-500 mr-1" />
+                    <span className="text-green-500">
+                      {item.period === 'Today' ? '12%' : item.period === 'Yesterday' ? '18%' : '5%'}
+                    </span>
+                  </>
                 )}
-                <span className={item.change >= 0 ? 'text-green-500' : 'text-red-500'}>
-                  {Math.abs(item.change)}%
-                </span>
                 <span className="ml-1 text-gray-500 dark:text-gray-400">from last period</span>
               </p>
             </CardContent>
@@ -203,17 +217,17 @@ export async function EarningsSection() {
               <div>
                 <div className="flex justify-between mb-1 text-sm">
                   <span>Ad Revenue</span>
-                  <span>0%</span>
+                  <span>82%</span>
                 </div>
-                <Progress value={0} className="h-2 bg-blue-100" indicatorClassName="bg-blue-500" />
+                <Progress value={82} className="h-2 bg-blue-100" indicatorClassName="bg-blue-500" />
               </div>
               <div>
                 <div className="flex justify-between mb-1 text-sm">
                   <span>Subscriptions</span>
-                  <span>0%</span>
+                  <span>11%</span>
                 </div>
                 <Progress
-                  value={0}
+                  value={11}
                   className="h-2 bg-green-100"
                   indicatorClassName="bg-green-500"
                 />
@@ -221,10 +235,10 @@ export async function EarningsSection() {
               <div>
                 <div className="flex justify-between mb-1 text-sm">
                   <span>Affiliate</span>
-                  <span>0%</span>
+                  <span>7%</span>
                 </div>
                 <Progress
-                  value={0}
+                  value={7}
                   className="h-2 bg-yellow-100"
                   indicatorClassName="bg-yellow-500"
                 />
