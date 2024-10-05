@@ -92,10 +92,10 @@ export async function EarningsSection() {
                 <div>
                   <div className="flex justify-between mb-1 text-sm">
                     <span>Ad Revenue</span>
-                    <span>100%</span>
+                    <span>0%</span>
                   </div>
                   <Progress
-                    value={100}
+                    value={0}
                     className="h-2 bg-blue-100"
                     indicatorClassName="bg-blue-500"
                   />
