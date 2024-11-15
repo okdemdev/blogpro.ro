@@ -21,17 +21,16 @@ interface iAppProps {
 
 export function SubmitButton({ text, className, variant }: iAppProps) {
   const { pending } = useFormStatus();
+
   return (
-    <>
-      {pending ? (
-        <Button disabled className={cn('w-fit', className)} variant={variant}>
-          <Loader2 className="mr-2 size-4 animate-spin" /> Please Wait
-        </Button>
-      ) : (
-        <Button className={cn('w-fit', className)} variant={variant} type="submit">
-          {text}
-        </Button>
-      )}
-    </>
+    <Button
+      disabled={pending}
+      className={cn('w-fit gap-2', className)}
+      variant={variant}
+      type="submit"
+    >
+      {pending && <Loader2 className="h-4 w-4 animate-spin" />}
+      {pending ? 'Please Wait' : text}
+    </Button>
   );
 }

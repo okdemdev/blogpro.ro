@@ -44,17 +44,16 @@ export default async function PricingPage() {
 
   if (data?.status === 'active') {
     return (
-      <Card className="w-full ">
+      <Card className="max-w-xl mx-auto">
         <CardHeader>
-          <CardTitle>Edit Subscription</CardTitle>
+          <CardTitle className="text-2xl">Subscription Management</CardTitle>
           <CardDescription>
-            Click on the button below, this will give you the opportunity to change your payment
-            details and view your statement at the same time.
+            Manage your subscription, payment methods, and billing information.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form action={createCustomerPortal}>
-            <SubmitButton text="View Subscription Details" />
+            <SubmitButton text="Manage Subscription" className="w-full" />
           </form>
         </CardContent>
       </Card>

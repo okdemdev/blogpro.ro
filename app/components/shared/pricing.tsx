@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { CheckIcon } from 'lucide-react';
+import { CheckIcon, Sparkles } from 'lucide-react';
 import { SubmitButton } from '../dashboard/SubmitButtons';
 import Link from 'next/link';
 import { CreateSubscripiton } from '@/app/actions';
@@ -39,60 +39,77 @@ export const PricingPlans: iAppProps[] = [
 
 export function PricingTable() {
   return (
-    <>
-      <div className="max-w-3xl mx-auto text-center">
-        <p className="font-semibold text-primary">Pricing</p>
-        <h1 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
-          Pricing Plans for everyone and every budget!
-        </h1>
-      </div>
-      <p className="mx-auto mt-6 max-w-2xl text-center leading-tight text-muted-foreground">
-        Choose a plan that fits your needs. Whether you re just starting out or scaling up, we ve
-        got you covered with flexible options to support your blogging journey.
-      </p>
-      <div className="grid grid-cols-1 gap-8 mt-16 lg:grid-cols-2">
-        {PricingPlans.map((item) => (
-          <Card key={item.id} className={item.id === 1 ? 'border-primary' : ''}>
-            <CardHeader>
-              <CardTitle>
-                {item.id === 1 ? (
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-primary">Startup</h3>
-                    <p className="rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold leading-5 text-primary">
-                      Most Popular
-                    </p>
-                  </div>
+    <div className="py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="inline-flex items-center rounded-full bg-primary/10 px-6 py-2 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20">
+            Pricing
+          </p>
+          <h2 className="mt-8 text-4xl font-bold tracking-tight sm:text-5xl">
+            Simple,{' '}
+            <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+              transparent
+            </span>{' '}
+            pricing
+          </h2>
+          <p className="mt-6 text-lg leading-8 text-muted-foreground">
+            Choose a plan that fits your needs. Whether you're just starting out or scaling up,
+            we've got you covered.
+          </p>
+        </div>
+
+        <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 gap-8 lg:max-w-4xl lg:grid-cols-2">
+          {PricingPlans.map((plan) => (
+            <Card
+              key={plan.id}
+              className={`flex flex-col justify-between ${
+                plan.id === 1
+                  ? 'relative border-primary bg-primary/5 before:absolute before:inset-0 before:scale-x-[1.015] before:scale-y-[1.015] before:rounded-xl before:bg-primary/20 before:blur-xl'
+                  : ''
+              }`}
+            >
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-xl font-bold">{plan.cardTitle}</CardTitle>
+                  {plan.id === 1 && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2 py-1 text-xs font-semibold text-primary">
+                      <Sparkles className="h-3 w-3" /> Popular
+                    </span>
+                  )}
+                </div>
+                <CardDescription className="text-sm">{plan.cardDescription}</CardDescription>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">{plan.priceTitle}</span>
+                  {plan.id === 1 && <span className="text-muted-foreground">/month</span>}
+                </div>
+              </CardHeader>
+
+              <CardContent>
+                <ul className="space-y-3">
+                  {plan.benefits.map((benefit, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <CheckIcon className="h-4 w-4 text-primary" />
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+
+              <CardFooter>
+                {plan.id === 1 ? (
+                  <form className="w-full" action={CreateSubscripiton}>
+                    <SubmitButton text="Get Started" className="w-full" />
+                  </form>
                 ) : (
-                  <>{item.cardTitle}</>
+                  <Button variant="outline" className="w-full" asChild>
+                    <Link href="/dashboard">Try for free</Link>
+                  </Button>
                 )}
-              </CardTitle>
-              <CardDescription>{item.cardDescription}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="mt-6 text-4xl font-bold tracking-tight">{item.priceTitle}</p>
-              <ul className="mt-8 space-y-3 text-sm leading-6 text-muted-foreground">
-                {item.benefits.map((benefit, index) => (
-                  <li key={index} className="flex gap-x-3">
-                    <CheckIcon className="text-primary size-5" />
-                    {benefit}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-            <CardFooter>
-              {item.id === 1 ? (
-                <form className="w-full" action={CreateSubscripiton}>
-                  <SubmitButton text="Buy Plan" className="mt-5 w-full" />
-                </form>
-              ) : (
-                <Button variant="outline" className="mt-5 w-full" asChild>
-                  <Link href={'/dashboard'}>Try for free</Link>
-                </Button>
-              )}
-            </CardFooter>{' '}
-          </Card>
-        ))}
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   );
 }

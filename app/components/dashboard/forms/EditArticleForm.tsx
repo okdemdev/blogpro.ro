@@ -16,7 +16,7 @@ import { JSONContent } from 'novel';
 import { useForm } from '@conform-to/react';
 import { parseWithZod } from '@conform-to/zod';
 import { PostSchema } from '@/app/utils/zodSchemas';
-import { CreatePostAction, EditPostAction } from '@/app/actions';
+import { EditPostAction } from '@/app/actions';
 import slugify from 'react-slugify';
 
 interface iAppProps {
@@ -40,80 +40,87 @@ export function EditArticleForm({ data, siteId }: iAppProps) {
 
   const [form, fields] = useForm({
     lastResult,
-
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: PostSchema });
     },
-
     shouldValidate: 'onBlur',
     shouldRevalidate: 'onInput',
   });
 
   function handleSlugGeneration() {
     const titleInput = title;
-
     if (titleInput?.length === 0 || titleInput === undefined) {
       return toast.error('Please create a title first');
     }
-
     setSlugValue(slugify(titleInput));
-
     return toast.success('Slug has been created');
   }
+
   return (
-    <Card className="mt-5">
+    <Card className="mt-5 border-border/50">
       <CardHeader>
-        <CardTitle>Article Details</CardTitle>
-        <CardDescription>Lipsum dolor site amet, consectetur adipiscing elit</CardDescription>
+        <CardTitle className="text-2xl">Edit Article</CardTitle>
+        <CardDescription>Make changes to your article here</CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="flex flex-col gap-6" id={form.id} onSubmit={form.onSubmit} action={action}>
+        <form className="space-y-8" id={form.id} onSubmit={form.onSubmit} action={action}>
           <input type="hidden" name="articleId" value={data.id} />
           <input type="hidden" name="siteId" value={siteId} />
-          <div className="grid gap-2">
+
+          <div className="space-y-2">
             <Label>Title</Label>
             <Input
               key={fields.title.key}
               name={fields.title.name}
               defaultValue={fields.title.initialValue}
-              placeholder="Nextjs blogging application"
+              placeholder="My awesome article"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
+              className="bg-background/50"
             />
-            <p className="text-red-500 text-sm">{fields.title.errors}</p>
+            {fields.title.errors && <p className="text-sm text-red-500">{fields.title.errors}</p>}
           </div>
-          <div className="grid gap-2">
+
+          <div className="space-y-2">
             <Label>Slug</Label>
-            <Input
-              key={fields.slug.key}
-              name={fields.slug.name}
-              defaultValue={fields.slug.initialValue}
-              placeholder="Article Slug"
-              onChange={(e) => setSlugValue(e.target.value)}
-              value={slug}
-            />
-            <Button
-              onClick={handleSlugGeneration}
-              className="w-fit"
-              variant={'secondary'}
-              type="button"
-            >
-              <Atom className="size-4 mr-2" /> Generate Slug
-            </Button>
-            <p className="text-red-500 text-sm">{fields.slug.errors}</p>
+            <div className="flex gap-2">
+              <Input
+                key={fields.slug.key}
+                name={fields.slug.name}
+                defaultValue={fields.slug.initialValue}
+                placeholder="my-awesome-article"
+                onChange={(e) => setSlugValue(e.target.value)}
+                value={slug}
+                className="bg-background/50"
+              />
+              <Button
+                onClick={handleSlugGeneration}
+                type="button"
+                variant="outline"
+                className="gap-2"
+              >
+                <Atom className="h-4 w-4" />
+                Generate
+              </Button>
+            </div>
+            {fields.slug.errors && <p className="text-sm text-red-500">{fields.slug.errors}</p>}
           </div>
-          <div className="grid gap-2">
-            <Label>Small Descripiton</Label>
+
+          <div className="space-y-2">
+            <Label>Small Description</Label>
             <Textarea
               key={fields.smallDescription.key}
               name={fields.smallDescription.name}
               defaultValue={data.smallDescription}
-              placeholder="Small descripiton for your blog article..."
-              className="h-32"
+              placeholder="Small description for your blog article..."
+              className="h-32 bg-background/50"
             />
-            <p className="text-red-500 text-sm">{fields.smallDescription.errors}</p>
+            {fields.smallDescription.errors && (
+              <p className="text-sm text-red-500">{fields.smallDescription.errors}</p>
+            )}
           </div>
-          <div className="grid gap-2">
+
+          <div className="space-y-2">
             <Label>Cover Image</Label>
             <input
               type="hidden"
@@ -121,12 +128,13 @@ export function EditArticleForm({ data, siteId }: iAppProps) {
               name={fields.coverImage.name}
               defaultValue={fields.coverImage.initialValue}
               value={imageUrl}
+              className="bg-background/50"
             />
             {imageUrl ? (
               <Image
                 src={imageUrl}
                 alt="Uploaded Image"
-                className="object-cover w-[200px] h-[200px] rounded-lg"
+                className="object-cover w-[200px] h-[200px] rounded-lg bg-background/50"
                 width={200}
                 height={200}
               />
@@ -142,9 +150,12 @@ export function EditArticleForm({ data, siteId }: iAppProps) {
                 }}
               />
             )}
-            <p className="text-red-500 text-sm">{fields.coverImage.errors}</p>
+            {fields.coverImage.errors && (
+              <p className="text-sm text-red-500">{fields.coverImage.errors}</p>
+            )}
           </div>
-          <div className="grid gap-2">
+
+          <div className="space-y-2">
             <Label>Article Content</Label>
             <input
               type="hidden"
@@ -152,11 +163,15 @@ export function EditArticleForm({ data, siteId }: iAppProps) {
               name={fields.articleContent.name}
               defaultValue={fields.articleContent.initialValue}
               value={JSON.stringify(value)}
+              className="bg-background/50"
             />
             <TailwindEditor onChange={setValue} initialValue={value} />
-            <p className="text-red-500 text-sm">{fields.articleContent.errors}</p>
+            {fields.articleContent.errors && (
+              <p className="text-sm text-red-500">{fields.articleContent.errors}</p>
+            )}
           </div>
-          <SubmitButton text="Edit Article" />
+
+          <SubmitButton text="Save Changes" />
         </form>
       </CardContent>
     </Card>

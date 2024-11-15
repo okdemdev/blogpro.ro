@@ -50,10 +50,18 @@ export async function EarningsSection() {
 
   if (data?.status === 'active') {
     return (
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-semibold">Your Earnings</h2>
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white">View Detailed Report</Button>
+      <div className="space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold">Analytics Overview</h2>
+            <p className="text-sm text-muted-foreground">
+              Track your blog's performance and earnings
+            </p>
+          </div>
+          <Button className="gap-2" variant="outline">
+            <PieChart className="h-4 w-4" />
+            View Report
+          </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {earningsData.map((data) => (

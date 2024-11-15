@@ -20,33 +20,12 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { Book, FileIcon, MoreHorizontalIcon, PlusCircle, Settings } from 'lucide-react';
+import { Book, MoreHorizontalIcon, PlusCircle, Settings } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 async function getData(userId: string, siteId: string) {
-  // const data = await prisma.post.findMany({
-  //   where: {
-  //     userId: userId,
-  //     siteId: siteId,
-  //   },
-  //   select: {
-  //     image: true,
-  //     title: true,
-  //     createdAt: true,
-  //     id: true,
-  //     Site: {
-  //       select: {
-  //         subdirectory: true,
-  //       },
-  //     },
-  //   },
-  //   orderBy: {
-  //     createdAt: 'desc',
-  //   },
-  // });
-
   const data = await prisma.site.findUnique({
     where: {
       id: siteId,
@@ -81,108 +60,113 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
   const data = await getData(user.id, params.siteId);
 
   return (
-    <>
-      <div className="flex w-full justify-end gap-x-4">
-        <Button asChild variant="secondary">
-          <Link href={`/blog/${data?.subdirectory}`}>
-            <Book className="size-4 mr-2" />
-            View Blog
-          </Link>
-        </Button>
-        <Button asChild variant={'secondary'}>
-          <Link href={`/dashboard/sites/${params.siteId}/settings`}>
-            <Settings className="size-4 mr-2" />
-            Settings
-          </Link>
-        </Button>
-        <Button asChild>
-          <Link href={`/dashboard/sites/${params.siteId}/create`}>
-            <PlusCircle className="size-4 mr-2" />
-            Create An Article
-          </Link>
-        </Button>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold">Site Articles</h2>
+          <p className="text-sm text-muted-foreground">Manage your blog articles</p>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <Button asChild variant="outline">
+            <Link href={`/blog/${data?.subdirectory}`}>
+              <Book className="h-4 w-4 mr-2" />
+              View Blog
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href={`/dashboard/sites/${params.siteId}/settings`}>
+              <Settings className="h-4 w-4 mr-2" />
+              Settings
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link href={`/dashboard/sites/${params.siteId}/create`}>
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Create Article
+            </Link>
+          </Button>
+        </div>
       </div>
-      {data?.posts === undefined || data.posts.length === 0 ? (
+
+      {!data?.posts.length ? (
         <EmptyState
-          title="You dont have any Articles created"
-          descripiton="You currently dont have any Articles for this Site. Please create some so that you can see them right here!"
+          title="No articles created yet"
+          descripiton="Create your first article to get started!"
           buttonText="Create Article"
           href={`/dashboard/sites/${params.siteId}/create`}
         />
       ) : (
-        <div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Articles</CardTitle>
-              <CardDescription>
-                Manage your Articles in a simple and intuitive interface
-              </CardDescription>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Image</TableHead>
-                      <TableHead>Title</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Created At</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {data.posts.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell>
-                          <Image
-                            src={item.image}
-                            width={64}
-                            height={64}
-                            alt="Article Cover Image"
-                            className="size-16 rounded-md object-cover"
-                          />
-                        </TableCell>
-                        <TableCell className="font-medium">{item.title}</TableCell>
-                        <TableCell>
-                          <Badge variant={'outline'} className="bg-green-500/10 text-green-500">
-                            Published
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          {new Intl.DateTimeFormat('en-US', {
-                            dateStyle: 'medium',
-                          }).format(item.createdAt)}
-                        </TableCell>
-                        <TableCell className="text-end">
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button size={'icon'} variant={'ghost'}>
-                                <MoreHorizontalIcon className="size-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem asChild>
-                                <Link href={`/dashboard/sites/${params.siteId}/${item.id}`}>
-                                  Edit
-                                </Link>
-                              </DropdownMenuItem>
-                              <DropdownMenuItem asChild>
-                                <Link href={`/dashboard/sites/${params.siteId}/${item.id}/delete`}>
-                                  Delete
-                                </Link>
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </CardHeader>
-          </Card>
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Articles</CardTitle>
+            <CardDescription>A list of all your articles for this site.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Image</TableHead>
+                  <TableHead>Title</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Created</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data.posts.map((post) => (
+                  <TableRow key={post.id}>
+                    <TableCell>
+                      <Image
+                        src={post.image}
+                        width={64}
+                        height={64}
+                        alt={post.title}
+                        className="rounded-lg object-cover"
+                      />
+                    </TableCell>
+                    <TableCell className="font-medium">{post.title}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="bg-green-500/10 text-green-500">
+                        Published
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      {new Intl.DateTimeFormat('en-US', {
+                        dateStyle: 'medium',
+                      }).format(post.createdAt)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="rounded-full">
+                            <MoreHorizontalIcon className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem asChild>
+                            <Link href={`/dashboard/sites/${params.siteId}/${post.id}`}>Edit</Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem asChild>
+                            <Link
+                              href={`/dashboard/sites/${params.siteId}/${post.id}/delete`}
+                              className="text-red-500"
+                            >
+                              Delete
+                            </Link>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       )}
-    </>
+    </div>
   );
 }

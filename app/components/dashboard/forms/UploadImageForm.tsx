@@ -21,39 +21,45 @@ interface iAppProps {
 
 export function UploadImageForm({ siteId }: iAppProps) {
   const [imageUrl, setImageUrl] = useState<undefined | string>(undefined);
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Image</CardTitle>
-        <CardDescription>This is the image of your site. you can change it here</CardDescription>
+        <CardTitle>Site Image</CardTitle>
+        <CardDescription>
+          Upload or update your site's featured image. This image will be displayed on your site's
+          card and header.
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt="Uploaded Image"
-            width={200}
-            height={200}
-            className="size-[200px] object-cover rounded-lg"
-          />
+          <div className="overflow-hidden rounded-lg border border-border/50">
+            <Image
+              src={imageUrl}
+              alt="Site Image"
+              width={400}
+              height={200}
+              className="aspect-video w-full object-cover"
+            />
+          </div>
         ) : (
           <UploadDropzone
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
               setImageUrl(res[0].url);
-              toast.success('Image has been uploaded');
+              toast.success('Image uploaded successfully');
             }}
             onUploadError={() => {
-              toast.error('Something went wrong.');
+              toast.error('Upload failed');
             }}
           />
         )}
       </CardContent>
       <CardFooter>
-        <form action={UpdateImage}>
+        <form action={UpdateImage} className="w-full">
           <input type="hidden" name="siteId" value={siteId} />
           <input type="hidden" name="imageUrl" value={imageUrl} />
-          <SubmitButton text="Change Image" />
+          <SubmitButton text="Save Changes" className="w-full" />
         </form>
       </CardFooter>
     </Card>

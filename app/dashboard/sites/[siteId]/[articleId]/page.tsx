@@ -1,7 +1,7 @@
 import { EditArticleForm } from '@/app/components/dashboard/forms/EditArticleForm';
 import prisma from '@/app/utils/db';
 import { Button } from '@/components/ui/button';
-import { ArrowLeftIcon } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -33,16 +33,21 @@ export default async function EditRoute({
   params: { articleId: string; siteId: string };
 }) {
   const data = await getData(params.articleId);
+
   return (
-    <div>
-      <div className="flex items-center">
-        <Button size={'icon'} variant={'outline'} asChild className="mr-3">
+    <div className="space-y-6">
+      <div className="flex items-center gap-4">
+        <Button variant="outline" size="icon" asChild>
           <Link href={`/dashboard/sites/${params.siteId}`}>
-            <ArrowLeftIcon className="size-4" />
+            <ChevronLeft className="h-4 w-4" />
           </Link>
         </Button>
-        <h1 className="text-2xl font-semibold">Edit Article</h1>
+        <div>
+          <h2 className="text-2xl font-bold">Edit Article</h2>
+          <p className="text-sm text-muted-foreground">Make changes to your article</p>
+        </div>
       </div>
+
       <EditArticleForm data={data} siteId={params.siteId} />
     </div>
   );

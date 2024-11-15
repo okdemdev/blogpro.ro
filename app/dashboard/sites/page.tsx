@@ -1,8 +1,8 @@
 import prisma from '@/app/utils/db';
 import { Button } from '@/components/ui/button';
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { FileIcon, PlusCircle } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -11,12 +11,8 @@ import { EmptyState } from '@/app/components/dashboard/EmptyState';
 
 async function getData(userId: string) {
   const data = await prisma.site.findMany({
-    where: {
-      userId: userId,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
+    where: { userId },
+    orderBy: { createdAt: 'desc' },
   });
   return data;
 }
@@ -30,52 +26,57 @@ export default async function SitesRoute() {
   }
 
   const data = await getData(user.id);
+
   return (
-    <>
-      <div className="flex w-full justify-end">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold">Your Sites</h2>
+          <p className="text-sm text-muted-foreground">Manage all your blog sites</p>
+        </div>
         <Button asChild>
-          <Link href={'/dashboard/sites/new'}>
-            <PlusCircle className="mr-2 size-4" /> Create Site
+          <Link href="/dashboard/sites/new">
+            <PlusCircle className="mr-2 h-4 w-4" /> Create Site
           </Link>
         </Button>
       </div>
 
-      {data === undefined || data.length === 0 ? (
+      {data.length === 0 ? (
         <EmptyState
-          title="You dont have any Sites created"
-          descripiton="You currently dont have any Sites. Please create some so that you can see them right here!"
+          title="No sites created yet"
+          descripiton="Create your first site to start blogging!"
           buttonText="Create Site"
           href="/dashboard/sites/new"
         />
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-          {data.map((item) => (
-            <Card key={item.id}>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {data.map((site) => (
+            <Card key={site.id} className="overflow-hidden">
               <Image
-                src={item.imageUrl ?? DefaultImage}
-                alt={item.name}
-                className="rounded-t-lg object-cover w-full h-[200px]"
+                src={site.imageUrl ?? DefaultImage}
+                alt={site.name}
+                className="aspect-video w-full object-cover"
                 width={400}
-                height={200}
+                height={225}
               />
               <CardHeader>
-                <CardTitle className="truncate">{item.name}</CardTitle>
-                <CardDescription className="line-clamp-2">{item.description}</CardDescription>
+                <CardTitle className="line-clamp-1">{site.name}</CardTitle>
+                <CardDescription className="line-clamp-2">{site.description}</CardDescription>
               </CardHeader>
-              <CardFooter>
-                <div className="flex items-center gap-4 w-full">
-                  <Button asChild className="w-full" variant={'outline'}>
-                    <Link href={`/dashboard/sites/${item.id}/settings`}>Edit</Link>
+              <CardContent>
+                <div className="flex gap-4">
+                  <Button asChild variant="outline" className="flex-1">
+                    <Link href={`/dashboard/sites/${site.id}/settings`}>Edit</Link>
                   </Button>
-                  <Button asChild className="w-full">
-                    <Link href={`/dashboard/sites/${item.id}`}>View Articles</Link>
+                  <Button asChild className="flex-1">
+                    <Link href={`/dashboard/sites/${site.id}`}>View Articles</Link>
                   </Button>
                 </div>
-              </CardFooter>
+              </CardContent>
             </Card>
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }

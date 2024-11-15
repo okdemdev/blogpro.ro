@@ -14,18 +14,18 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: 'Blog Pro',
-  description: 'Set up your blog in minutes',
+  title: 'BlogPro - Professional Blogging Platform',
+  description: 'Set up your professional blog in minutes',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/logo.svg" type="image/svg+xml" /> {/* Add favicon directly */}
+        <link rel="icon" href="/logo.svg" type="image/svg+xml" />
         <AdSense pId="2141920018752286" />
       </head>
-      <body className={`${geistSans.className} ${geistMono.className}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableTransitionOnChange
         >
           {children}
-          <Toaster richColors closeButton />
+          <Toaster position="bottom-right" richColors closeButton />
         </ThemeProvider>
       </body>
     </html>
