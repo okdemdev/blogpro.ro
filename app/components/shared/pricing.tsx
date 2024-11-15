@@ -53,8 +53,8 @@ export function PricingTable() {
             pricing
           </h2>
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Choose a plan that fits your needs. Whether you're just starting out or scaling up,
-            we've got you covered.
+            Choose a plan that fits your needs. Whether you&apos;re just starting out or scaling up,
+            we&apos;ve got you covered.
           </p>
         </div>
 

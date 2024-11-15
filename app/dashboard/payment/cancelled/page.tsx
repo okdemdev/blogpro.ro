@@ -14,7 +14,7 @@ export default function CancelledRoute() {
 
           <h2 className="mt-6 text-2xl font-semibold">Payment Cancelled</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            No worries, you won't be charged. Feel free to try again when you're ready.
+            No worries, you won&apos;t be charged. Feel free to try again when you&apos;re ready.
           </p>
 
           <Button asChild className="mt-8 w-full">

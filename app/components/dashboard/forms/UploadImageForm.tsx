@@ -27,8 +27,8 @@ export function UploadImageForm({ siteId }: iAppProps) {
       <CardHeader>
         <CardTitle>Site Image</CardTitle>
         <CardDescription>
-          Upload or update your site's featured image. This image will be displayed on your site's
-          card and header.
+          Upload or update your site&apos;s featured image. This image will be displayed on your
+          site&apos;s card and header.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
