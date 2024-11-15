@@ -39,6 +39,7 @@ async function getData(userId: string, siteId: string) {
           title: true,
           createdAt: true,
           id: true,
+          slug: true,
         },
         orderBy: {
           createdAt: 'desc',
@@ -154,6 +155,11 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
                               </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
+                              <Link href={`/blog/${data?.subdirectory}/${post.slug}`}>
+                                View Article
+                              </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
                               <Link
                                 href={`/dashboard/sites/${params.siteId}/${post.id}/delete`}
                                 className="text-red-500"
@@ -202,6 +208,11 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem asChild>
                           <Link href={`/dashboard/sites/${params.siteId}/${post.id}`}>Edit</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href={`/blog/${data?.subdirectory}/${post.slug}`}>
+                            View Article
+                          </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link
