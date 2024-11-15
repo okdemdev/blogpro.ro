@@ -46,7 +46,7 @@ export default async function DashboardIndexPage() {
         </div>
 
         {sites.length > 0 ? (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
             {sites.map((site) => (
               <Card key={site.id} className="overflow-hidden">
                 <Image
@@ -56,7 +56,7 @@ export default async function DashboardIndexPage() {
                   width={400}
                   height={225}
                 />
-                <CardHeader>
+                <CardHeader className="space-y-2">
                   <CardTitle className="line-clamp-1">{site.name}</CardTitle>
                   <CardDescription className="line-clamp-2">{site.description}</CardDescription>
                 </CardHeader>
