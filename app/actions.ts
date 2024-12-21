@@ -68,9 +68,7 @@ export async function CreateSiteAction(prevState: any, formData: FormData) {
         },
       });
 
-      if (response) {
-        return redirect('/dashboard/sites');
-      }
+      return redirect('/dashboard/sites');
     } catch (error) {
       console.error('Database error:', error);
       return {
