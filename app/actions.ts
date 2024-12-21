@@ -29,13 +29,13 @@ export async function CreateSiteAction(prevState: any, formData: FormData) {
   if (!subStatus || subStatus.status !== 'active') {
     if (sites.length < 1) {
       // Allow creating a site
-      await createSite();
+      return await createSite();
     } else {
       return redirect('/dashboard/pricing');
     }
   } else if (subStatus.status === 'active') {
     // User has a active plan he can create sites...
-    await createSite();
+    return await createSite();
   }
 
   async function createSite() {
@@ -58,16 +58,29 @@ export async function CreateSiteAction(prevState: any, formData: FormData) {
       return submission.reply();
     }
 
-    const response = await prisma.site.create({
-      data: {
-        description: submission.value.description,
-        name: submission.value.name,
-        subdirectory: submission.value.subdirectory,
-        userId: user.id,
-      },
-    });
+    try {
+      const response = await prisma.site.create({
+        data: {
+          description: submission.value.description,
+          name: submission.value.name,
+          subdirectory: submission.value.subdirectory,
+          userId: user.id,
+        },
+      });
+
+      if (response) {
+        return redirect('/dashboard/sites');
+      }
+    } catch (error) {
+      console.error('Database error:', error);
+      return {
+        status: 'error' as const,
+        error: {
+          subdirectory: ['Failed to create site. Please try again.'],
+        },
+      };
+    }
   }
-  return redirect('/dashboard/sites');
 }
 
 export async function CreatePostAction(prevState: any, formData: FormData) {
