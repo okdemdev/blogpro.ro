@@ -54,6 +54,7 @@ export async function CreateSiteAction(prevState: any, formData: FormData) {
     });
 
     if (submission.status !== 'success') {
+      console.error('Site creation failed:', submission.error);
       return submission.reply();
     }
 
