@@ -27,57 +27,49 @@ export async function CreateSiteAction(prevState: any, formData: FormData) {
   ]);
 
   if (!subStatus || subStatus.status !== 'active') {
-    if (sites.length < 1) {
-      // Allow creating a site
-      return await createSite();
-    } else {
+    if (sites.length >= 1) {
       return redirect('/dashboard/pricing');
     }
-  } else if (subStatus.status === 'active') {
-    // User has a active plan he can create sites...
-    return await createSite();
   }
 
-  async function createSite() {
-    const submission = await parseWithZod(formData, {
-      schema: SiteCreationSchema({
-        async isSubdirectoryUnique() {
-          const existingsubdirectory = await prisma.site.findUnique({
-            where: {
-              subdirectory: formData.get('subdirectory') as string,
-            },
-          });
-          return !existingsubdirectory;
-        },
-      }),
-      async: true,
+  const submission = await parseWithZod(formData, {
+    schema: SiteCreationSchema({
+      async isSubdirectoryUnique() {
+        const existingsubdirectory = await prisma.site.findUnique({
+          where: {
+            subdirectory: formData.get('subdirectory') as string,
+          },
+        });
+        return !existingsubdirectory;
+      },
+    }),
+    async: true,
+  });
+
+  if (submission.status !== 'success') {
+    console.error('Site creation failed:', submission.error);
+    return submission.reply();
+  }
+
+  try {
+    await prisma.site.create({
+      data: {
+        description: submission.value.description,
+        name: submission.value.name,
+        subdirectory: submission.value.subdirectory,
+        userId: user.id,
+      },
     });
 
-    if (submission.status !== 'success') {
-      console.error('Site creation failed:', submission.error);
-      return submission.reply();
-    }
-
-    try {
-      const response = await prisma.site.create({
-        data: {
-          description: submission.value.description,
-          name: submission.value.name,
-          subdirectory: submission.value.subdirectory,
-          userId: user.id,
-        },
-      });
-
-      return redirect('/dashboard/sites');
-    } catch (error) {
-      console.error('Database error:', error);
-      return {
-        status: 'error' as const,
-        error: {
-          subdirectory: ['Failed to create site. Please try again.'],
-        },
-      };
-    }
+    return redirect('/dashboard/sites');
+  } catch (error) {
+    console.error('Database error:', error);
+    return {
+      status: 'error' as const,
+      error: {
+        subdirectory: ['Failed to create site. Please try again.'],
+      },
+    };
   }
 }
 
